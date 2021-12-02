@@ -46,3 +46,14 @@ def update_place(id):
         status = 200,
     ), 200
     
+@favoriteplaces.route('/<id>', methods=['DELETE'])
+def delete_place(id):
+    delete_query = models.Favorite.delete().where(models.Favorite.id==id)
+    nums_of_rows_deleted = delete_query.execute()
+    print(nums_of_rows_deleted)
+    
+    return jsonify(
+        data={},
+        message=f"Successfully deleted {nums_of_rows_deleted} dog with id {id}",
+        status = 200
+    ), 200
