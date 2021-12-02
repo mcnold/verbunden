@@ -14,7 +14,7 @@ favoriteplaces = Blueprint('favoriteplaces', 'favoriteplaces')
 def create_favoriteplace():
     payload = request.get_json()
     print(payload)
-    new_place = models.Favorite.create(owner=payload['owner'], city=payload['city'], country=payload['country'], type=payload['type'], latitude=payload['latitude'], longitude=payload['longitude'])
+    new_place = models.Favorite.create(username=current_user, city=payload['city'], country=payload['country'], type=payload['type'], latitude=payload['latitude'], longitude=payload['longitude'])
     
     print(new_place) 
     
@@ -45,3 +45,4 @@ def update_place(id):
         message = 'Resource updated successfully',
         status = 200,
     ), 200
+    

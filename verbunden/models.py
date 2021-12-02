@@ -20,7 +20,7 @@ class User(UserMixin, Model):
 from flask_login import UserMixin
 
 class Favorite(Model):
-    owner = ForeignKeyField(User, backref='favoriteplaces')
+    username = ForeignKeyField(User, backref='favoriteplaces')
     city = CharField()
     country = CharField()
     type = CharField()

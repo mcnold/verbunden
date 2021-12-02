@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, after_this_request
 import flask
 
 from resources.favoriteplaces import favoriteplaces
@@ -30,7 +30,7 @@ CORS(favoriteplaces, origins=['http://localhost:3000'], supports_credentials=Tru
 CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
 
 app.register_blueprint(favoriteplaces, url_prefix='/favoriteplaces')
-app.register_blueprint(users, url_prefix='/users/register')
+app.register_blueprint(users, url_prefix='/users')
 
 @app.route('/')
 def hello():
