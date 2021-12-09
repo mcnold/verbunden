@@ -91,3 +91,23 @@ def login():
             status=401
         ), 401
  
+@users.route('/<id>', methods=['GET'])
+def get_one_user(id):
+    user = models.User.get_by_id(id)
+    print(user)
+    return jsonify(
+        data = model_to_dict(user),
+        message = 'Success!',
+        status = 200
+    ), 200
+    
+@users.route('/<id>', methods=['PUT'])
+def update_user(id):
+    payload = request.get_json()
+    models.User.update(**payload).where(models.User.id==id).execute()
+    
+    return jsonify(
+        data = model_to_dict(models.User.get_by_id(id)),
+        message = 'Resource updated successfully',
+        status = 200,
+    ), 200

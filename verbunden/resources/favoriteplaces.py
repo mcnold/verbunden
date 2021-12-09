@@ -10,6 +10,10 @@ from flask_login import current_user
 
 favoriteplaces = Blueprint('favoriteplaces', 'favoriteplaces')
 
+@favoriteplaces.route('/', methods=['GET'])
+def test_user_resource():
+    return "favorite resource works"
+
 @favoriteplaces.route('/', methods=['POST'])
 def create_favoriteplace():
     payload = request.get_json()
@@ -54,6 +58,6 @@ def delete_place(id):
     
     return jsonify(
         data={},
-        message=f"Successfully deleted {nums_of_rows_deleted} dog with id {id}",
+        message=f"Successfully deleted {nums_of_rows_deleted} place with id {id}",
         status = 200
     ), 200
