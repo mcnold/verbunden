@@ -21,11 +21,14 @@ from flask_login import UserMixin
 
 class Favorite(Model):
     username = ForeignKeyField(User, backref='favoriteplaces')
+    url = CharField()
+    place = CharField()
     city = CharField()
     country = CharField()
     type = CharField()
     latitude = DecimalField()
     longitude = DecimalField()
+    
     
     class Meta:
         database = DATABASE

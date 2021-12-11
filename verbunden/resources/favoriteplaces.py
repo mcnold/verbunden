@@ -1,3 +1,4 @@
+from flask_login.utils import login_required
 import models
 import geopandas
 import geopy
@@ -11,14 +12,20 @@ from flask_login import current_user
 favoriteplaces = Blueprint('favoriteplaces', 'favoriteplaces')
 
 @favoriteplaces.route('/', methods=['GET'])
-def test_user_resource():
-    return "favorite resource works"
+@login_required
+def favorites_index():
+    favorite_dicts = [model_to_dict(favoriteplace) for favoriteplace in current_user.favoriteplaces]
+    return jsonify({
+        'data': favorite_dicts,
+        'message': f"Successfully found {len(favorite_dicts)} places",
+        'status': 200
+    }), 200
 
 @favoriteplaces.route('/', methods=['POST'])
 def create_favoriteplace():
     payload = request.get_json()
     print(payload)
-    new_place = models.Favorite.create(username=current_user, city=payload['city'], country=payload['country'], type=payload['type'], latitude=payload['latitude'], longitude=payload['longitude'])
+    new_place = models.Favorite.create(username=current_user, url=payload['url'], place=payload['place'], city=payload['city'], country=payload['country'], type=payload['type'], latitude=payload['latitude'], longitude=payload['longitude'])
     
     print(new_place) 
     
